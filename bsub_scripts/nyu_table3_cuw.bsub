@@ -1,0 +1,71 @@
+#!/bin/bash
+# specify the virtual environment used to run this batch job in line 48
+# call with: bsub < ./bsub_scripts/nyu_table3_cuw.bsub
+#BSUB -J "nyu_table3_cuw_[1-15]"
+#
+# Determine where the output will be written
+#BSUB -o /fs/scratch/rng_cr_bcai_dl_students/kus1rng/experiments/%x_%j_%i.out
+#
+# Specify the number of GPUs to be used per host.
+#BSUB -gpu "num=1"
+#
+#BSUB -q batch_v100
+#
+# min number of CPU cores
+#BSUB -n 8
+#
+# Required amount of memory per CPU core (in Mbyte)
+#BSUB -M 30000
+#
+# Specify the maximum runtime of you job. The format is "hours:minutes".
+#BSUB -W 30:00
+#
+# Receive email notifications.  Specify when to receive emails.
+##BSUB -B			    # receive email when job starts
+##BSUB -N			    # receive email when job ends
+#
+# Make sure that all job slots run on the same host
+#BSUB -R "span[hosts=1]"    # run on a single host
+
+
+# Exit on any error. Do not put this line before the two mandatory ones.
+set -e
+
+SUFFIX=$"$LSB_JOBNAME"_"$LSB_JOBID"_"$LSB_JOBINDEX"
+
+export EXPDIR=/fs/scratch/rng_cr_bcai_dl_students/kus1rng/experiments/$SUFFIX
+if [ ! -d "$EXPDIR" ]; then
+  echo "Creating experiment directory $EXPDIR"
+mkdir -p $EXPDIR
+fi
+
+cd $EXPDIR
+
+module purge
+module load conda
+
+#conda create -n test_env python=3.9.0
+conda activate libMTL_batchjob_env
+
+#source /fs/applications/p4s-access/1.0/ActivateP4S.sh -a #activate proxy
+
+git clone https://github.boschdevcloud.com/bcai-internal/MTL-playground
+cd ./MTL-playground
+git checkout origin/final_13
+#pip install -r requirements.txt
+
+#source /fs/applications/p4s-access/1.0/ActivateP4S.sh -d #deactivate proxy
+
+bash <(sed -n $LSB_JOBINDEX,$LSB_JOBINDEX'p' $EXPDIR/MTL-playground/run_commands/nyu_table3_cuw.sh) # run line in file
+
+
+conda deactivate
+#conda env remove -n test_env
+module purge
+
+# remove cloned repository
+cd $EXPDIR
+cd ..
+rm -rf $SUFFIX
+
+set +e

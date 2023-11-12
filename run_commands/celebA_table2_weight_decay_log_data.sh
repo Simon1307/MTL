@@ -1,0 +1,1 @@
+python tensorboard_eval/get_celebA_logs.py --dataset_name CelebA --base_path /fs/scratch/rng_cr_bcai_dl_students/kus1rng/celebA_table2_weight_decay/ --num_runs_per_method 5 --num_tasks 40 --result_path /home/kus1rng/MTL-playground/results/tables/celebA_loss_weighting_methods.tex
