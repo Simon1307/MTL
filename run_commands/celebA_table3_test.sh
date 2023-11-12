@@ -1,1 +1,0 @@
-python examples/celebA/train_celebA.py --weighting DCUW_CAGrad --calpha 0.4 --rescale 1 --arch RESNET18 --dataset_path /fs/scratch/rng_cr_bcai_dl/OpenData/CelebA --train_bs 256 --test_bs 256 --epochs 2 --seed 10 --optim adam --lr 0.0005 --weight_decay 0 --scheduler step --step_size 30 --gamma 0.5 --logdir=/fs/scratch/rng_cr_bcai_dl_students/kus1rng/celebA_table3_test/
