@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from _record import _PerformanceMeter_Cityscapes, _PerformanceMeter_NYUv2, _PerformanceMeter_celebA
 from utils import count_parameters
-from weighting import EW, DWA, DCUW, CUW, CAGrad, PCGrad, RLW, STL, UW, GLS, DUW, UW_mlp
+from weighting import EW, DWA, DCUW, CUW, CAGrad, PCGrad, RLW, STL, UW, GLS, DUW, UW_mlp, MCD
 
 
 class Trainer(nn.Module):
