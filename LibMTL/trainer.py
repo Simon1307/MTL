@@ -26,7 +26,7 @@ class Trainer(nn.Module):
                              "UW": UW.UW, "RLW": RLW.RLW, "STL": STL.STL, "CAGrad": CAGrad.CAGrad,
                              "DCUW_CAGrad": CAGrad.DCUW_CAGrad, "UW_CAGrad": CAGrad.UW_CAGrad, "PCGrad": PCGrad.PCGrad,
                              "DCUW_PCGrad": PCGrad.DCUW_PCGrad, "UW_PCGrad": PCGrad.UW_PCGrad, "DUW": DUW.DUW,
-                             "CUW_CAGrad": CAGrad.CUW_CAGrad, "CUW_PCGrad": PCGrad.CUW_PCGrad, "UW_mlp": UW_mlp.UW_mlp}
+                             "CUW_CAGrad": CAGrad.CUW_CAGrad, "CUW_PCGrad": PCGrad.CUW_PCGrad, "UW_mlp": UW_mlp.UW_mlp, "MCD": MCD.MCD}
         self.weighting_method = weighting_methods[weighting]
         self._prepare_optimizer(optim_param, scheduler_param)
         if scheduler_param is not None:

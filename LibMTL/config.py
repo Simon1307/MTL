@@ -10,7 +10,7 @@ def prepare_args(params):
     """
     kwargs = {'weight_args': {}, 'arch_args': {}}
     if params.weighting in ['EW', 'UW', 'GLS', 'RLW', 'PCGrad', 'CAGrad', 'DWA', 'UW_CAGrad', 'DCUW', 'DCUW_CAGrad',
-                            'STL', 'DCUW_PCGrad', 'UW_PCGrad', 'CUW', 'DUW', 'CUW_CAGrad', 'CUW_PCGrad', 'UW_mlp']:
+                            'STL', 'DCUW_PCGrad', 'UW_PCGrad', 'CUW', 'DUW', 'CUW_CAGrad', 'CUW_PCGrad', 'UW_mlp', 'MCD']:
         if params.weighting in ['DWA']:
             if params.T is not None:
                 kwargs['weight_args']['T'] = params.T
@@ -27,6 +27,10 @@ def prepare_args(params):
                 kwargs['weight_args']['rescale'] = params.rescale
             else:
                 raise ValueError('CAGrad needs keyword calpha and rescale')
+        elif params.weighting in ['MCD']:
+            kwargs['weight_args']['num_samples'] = params.num_samples
+            kwargs['weight_args']['uncertainty_measure'] = params.uncertainty_measure
+            kwargs['weight_args']['sigma_scaling'] = params.sigma_scaling
     else:
         raise ValueError('No support weighting method {}'.format(params.weighting))
         
